@@ -95,10 +95,6 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IDropHandler
         {
             OnLeftCLick();
         }
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-
-        }
     }
 
     public virtual void OnLeftCLick()
@@ -123,7 +119,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IDropHandler
         selectedShader.SetActive(false);
     }
 
-    public void OnDrop(PointerEventData eventData)
+    public virtual void OnDrop(PointerEventData eventData)
     {
         GameObject dropped = eventData.pointerDrag;
         inventoryManager.SwitchSlots(dropped.GetComponent<DraggableItem>().parentItemSlot, this);

@@ -132,11 +132,21 @@ public class InventoryManager : MonoBehaviour
         //Put it on the correct slot
         if (slot.item.itemType == ItemType.Clothes)
         {
+            //Unequip current clothes
+            if (!clothesEquipSlot.isEmpty)
+            {
+                UnEquipGear(clothesEquipSlot);
+            }
             clothesEquipSlot.EquipGear(slot.item);
             playerMovement.ChangeBody(slot.item.numberAnimation);
         }
         else if(slot.item.itemType == ItemType.Hair)
         {
+            //Unequip current hair
+            if (!headEquipSlot.isEmpty)
+            {
+                UnEquipGear(headEquipSlot);
+            }
             headEquipSlot.EquipGear(slot.item);
             playerMovement.ChangeHead(slot.item.numberAnimation);
         }
@@ -144,8 +154,19 @@ public class InventoryManager : MonoBehaviour
         slot.UseItem(1, noItem);
     }
 
+    public void DropGearInSlot(ItemSlot slot, EquippedSlot finalSlot)
+    {
+        //Put it on the correct slot
+        if (slot.item.itemType == finalSlot.itemType)
+        {
+            EquipGear(slot);
+        }
+
+    }
+
     public void UnEquipGear(EquippedSlot slot)
     {
+
         if (slot.item.itemType == ItemType.Clothes)
         {
             playerMovement.ChangeBody(0);
@@ -162,8 +183,9 @@ public class InventoryManager : MonoBehaviour
 
     public void SwitchSlots(ItemSlot originSlot, ItemSlot finalSlot)
     {
-        Debug.Log(originSlot.GetType());
-
+        //LastMinutedebugging
+        if (originSlot.item == null || originSlot == finalSlot)
+            return;
         //------------------------------------------------------------------
         //shopkeeper slot items can only be placed in buy slots
         if (originSlot.GetType() == typeof(ShopKeeperSlot) && finalSlot.GetType() != typeof(BuySlot))
