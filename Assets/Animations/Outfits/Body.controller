@@ -36,10 +36,10 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 6882967166986182739}
-    m_Position: {x: 30, y: 300, z: 0}
+    m_Position: {x: 140, y: 290, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5638593615392083606}
-    m_Position: {x: 30, y: 390, z: 0}
+    m_Position: {x: 140, y: 380, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1518551976492302987}
     m_Position: {x: 420, y: 380, z: 0}
@@ -172,7 +172,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 7
-    m_ConditionEvent: outfit
+    m_ConditionEvent: Outfit
     m_EventTreshold: 2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5704931231589966332}
@@ -197,7 +197,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 6
-    m_ConditionEvent: outfit
+    m_ConditionEvent: Outfit
     m_EventTreshold: 2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6510095839037879856}
@@ -326,7 +326,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: outfit
+  - m_Name: Outfit
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -379,7 +379,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 7
-    m_ConditionEvent: outfit
+    m_ConditionEvent: Outfit
     m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5704931231589966332}
@@ -429,7 +429,7 @@ AnimatorTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 6
-    m_ConditionEvent: outfit
+    m_ConditionEvent: Outfit
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5704931231589966332}
@@ -493,7 +493,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 6
-    m_ConditionEvent: outfit
+    m_ConditionEvent: Outfit
     m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6882967166986182739}

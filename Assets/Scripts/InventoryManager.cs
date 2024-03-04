@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class InventoryManager : MonoBehaviour
 {
     public GameObject InventoryMenu;
+    public bool isShopOpen = false;
     private bool menuActivated = false;
     public ItemSlot[] itemSlots;
 
@@ -34,24 +35,38 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetButtonDown("Inventory") && menuActivated)
+        //Only be able to interact with inventory if shop is not open 
+        if (Input.GetButtonDown("Inventory") && menuActivated && !isShopOpen)
         {
-            ChangeSelectedSlot(null);
-            InventoryMenu.SetActive(false);
-            menuActivated = false;
-            Time.timeScale = 1;
+            CloseInventory();
         }
-        else if(Input.GetButtonDown("Inventory") && !menuActivated)
+        else if(Input.GetButtonDown("Inventory") && !menuActivated && !isShopOpen)
         {
-            Time.timeScale = 0;
-            InventoryMenu.SetActive(true);
-            menuActivated = true;
+            OpenInventory();
         }
 
     }
 
-    public void AddItem(Item item, int quantity)
+    public void OpenInventory()
+    {
+        Time.timeScale = 0;
+        InventoryMenu.SetActive(true);
+        menuActivated = true;
+    }
+    public void CloseInventory()
+    {
+        ChangeSelectedSlot(null);
+        InventoryMenu.SetActive(false);
+        menuActivated = false;
+        Time.timeScale = 1;
+    }
+   
+    public void ChangeIsShopOpen(bool value)
+    {
+        isShopOpen = value;
+    }
+
+    public bool AddItem(Item item, int quantity)
     {
         //Tries to find instance of same item
         for(int i = 0; i < itemSlots.Length; i++)
@@ -62,7 +77,7 @@ public class InventoryManager : MonoBehaviour
             {
                 //if it's possible, return true
                 if (itemSlots[i].AddQuantity(quantity))
-                    return;
+                    return true;
             }
         }
         //item is not in inventory or no slots with space
@@ -71,9 +86,10 @@ public class InventoryManager : MonoBehaviour
             if (itemSlots[i].isEmpty)
             {
                 itemSlots[i].AddItem(item, quantity);
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     public void ChangeSelectedSlot(ItemSlot newSelected)
@@ -146,6 +162,31 @@ public class InventoryManager : MonoBehaviour
 
     public void SwitchSlots(ItemSlot originSlot, ItemSlot finalSlot)
     {
+        Debug.Log(originSlot.GetType());
+
+        //------------------------------------------------------------------
+        //shopkeeper slot items can only be placed in buy slots
+        if (originSlot.GetType() == typeof(ShopKeeperSlot) && finalSlot.GetType() != typeof(BuySlot))
+        {
+            return;
+        }
+        //in the sell slot, only things from itemslot or equipped slots allowed
+        if (finalSlot.GetType() == typeof(SellSlot) && (originSlot.GetType() != typeof(ItemSlot) && originSlot.GetType() != typeof(EquippedSlot)))
+        {
+            return;
+        }
+        //ShopKeeperSlots only allowed in the buy slot (can't move around shopkeeper inventory)
+        if (originSlot.GetType() != typeof(ShopKeeperSlot) && finalSlot.GetType() == typeof(BuySlot))
+        {
+            return;
+        }
+        //Can't put things in shop keeper inventory (unless regretting buying
+        if (finalSlot.GetType() == typeof(ShopKeeperSlot) && originSlot.GetType() != typeof(BuySlot))
+        {
+            return;
+        }
+        //------------------------------------------------------------------
+
         //If slot is empty, add dragged item to it
         if (finalSlot.isEmpty)
         {

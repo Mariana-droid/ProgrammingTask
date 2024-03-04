@@ -20,14 +20,14 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IDropHandler
     [SerializeField]
     public Image itemImage;
     [SerializeField]
-    public GameObject ImageGameObject;
+    public GameObject imageGameObject;
     [SerializeField]
     private GameObject selectedShader;
 
     public InventoryManager inventoryManager;
     Transform parentAfterDrag;
 
-    private void Start()
+    public virtual void Start()
     {
         inventoryManager = GameObject.Find("InventoryCanvas").GetComponent<InventoryManager>();
     }
@@ -35,7 +35,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IDropHandler
     {
         Deselect();
     }
-    public void AddItem(Item newItem, int quantity)
+    public  virtual void AddItem(Item newItem, int quantity)
     {
 
         this.item = newItem;
